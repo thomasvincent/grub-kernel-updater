@@ -7,7 +7,7 @@ A Python script for updating the default boot option in the GRUB configuration f
 - The script must be run with root privileges, as it modifies the `/etc/grub.conf` file.
 
 ## Usage
-``` python grub_config_updater.py
+``` python grub_config_updater.py ```
 
 ## Limitations
 - The script assumes that the GRUB configuration file follows the specific format of listing the available kernels with the line starting with `kernel /boot/vmlinuz-`.
