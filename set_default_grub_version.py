@@ -1,7 +1,9 @@
 import re
-import os
+import subprocess
+
 
 GRUB_PATH = "/etc/grub.conf"
+
 
 def get_available_versions():
     """
@@ -35,7 +37,7 @@ def get_highest_index(versions):
     """
     highest_version = 0
 
-    for i, version in enumerate(versions,1):
+    for i, version in enumerate(versions, 1):
         if version > versions[highest_version]:
             highest_version = i
 
@@ -49,8 +51,13 @@ def main():
     versions = get_available_versions()
     highest = get_highest_index(versions)
 
-    command = f'sed -i.bak s/default=./default={highest}/g {GRUB_PATH}'
-    os.system(command)
+    subprocess.run(
+        ["sed", "-i.bak", f"s/default=./default={highest}/g", GRUB_PATH],
+        capture_output=True,
+        check=True,
+        text=True,
+    )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
