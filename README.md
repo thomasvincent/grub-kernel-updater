@@ -26,7 +26,8 @@ Running this script requires root privileges, as it modifies system configuratio
 
    ```bash
    sudo python3 grub_config_updater.py
-```
+   ```
+   
 Warning: Running the script with sudo grants it root access. Double-check that you're using the correct script before proceeding.
 
 ## Features
