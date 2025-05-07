@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  grub-kernel-updater:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Mount the host's GRUB configuration directory
+      # Replace /etc/grub.conf with your actual GRUB configuration path
+      - ${GRUB_CONFIG_PATH:-/etc/grub.conf}:/mnt/grub/grub.conf:rw
+    command: --config /mnt/grub/grub.conf
+    # To run in list-only mode (non-destructive)
+    # command: --config /mnt/grub/grub.conf --list-only
+    # To set a specific kernel version
+    # command: --config /mnt/grub/grub.conf --version 5.10.0-1234

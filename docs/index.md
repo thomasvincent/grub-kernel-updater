@@ -6,6 +6,7 @@ Welcome to the Grub Kernel Updater documentation. This utility helps you manage 
 
 - [Usage Guide](usage.md): Instructions for using the tool
 - [Architecture](architecture.md): Technical details about the design
+- [Docker Guide](docker.md): Instructions for using with Docker
 
 ## Quick Start
 
@@ -19,6 +20,9 @@ pip install -e .
 
 # Using pip (once published)
 pip install grub-kernel-updater
+
+# Using Docker
+docker build -t grub-kernel-updater .
 ```
 
 ### Basic Usage
@@ -32,6 +36,9 @@ grub-kernel-updater --list-only
 
 # Set specific version as default
 sudo grub-kernel-updater --version 5.10.0-1234
+
+# Using Docker (list-only mode)
+docker run -v /etc/grub.conf:/mnt/grub/grub.conf:ro grub-kernel-updater --list-only
 ```
 
 ## Key Features
@@ -40,6 +47,7 @@ sudo grub-kernel-updater --version 5.10.0-1234
 - Supports manual selection of a specific kernel version
 - Easy-to-use command line interface
 - Python API for integration with other tools
+- Docker support for containerized execution
 - Robust error handling and validation
 
 ## License

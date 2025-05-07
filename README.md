@@ -12,6 +12,7 @@ A Python utility for managing GRUB boot configuration by updating the default ke
 - Supports manual selection of a specific kernel version
 - Easy-to-use command-line interface
 - Robust error handling and validation
+- Docker support for containerized execution
 
 ## Installation
 
@@ -31,6 +32,18 @@ pip install -e .
 ```bash
 pip install grub-kernel-updater
 ```
+
+### Using Docker
+
+```bash
+# Build the Docker image
+docker build -t grub-kernel-updater .
+
+# Run in list-only mode (non-destructive)
+docker run -v /etc/grub.conf:/mnt/grub/grub.conf:ro grub-kernel-updater --list-only
+```
+
+See the [Docker documentation](docs/docker.md) for more details.
 
 ## Usage
 
@@ -108,6 +121,22 @@ black --check grub_kernel_updater tests
 isort --check-only grub_kernel_updater tests
 mypy grub_kernel_updater
 ```
+
+### Docker Development
+
+```bash
+# Build the Docker image
+docker build -t grub-kernel-updater .
+
+# Run the tests in Docker
+docker run -it --rm grub-kernel-updater pytest
+```
+
+## Documentation
+
+- [Usage Guide](docs/usage.md) - Detailed usage instructions
+- [Architecture](docs/architecture.md) - Technical architecture and design
+- [Docker Guide](docs/docker.md) - Docker usage instructions
 
 ## Contributing
 

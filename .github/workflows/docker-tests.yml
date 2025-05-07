@@ -1,0 +1,58 @@
+name: Docker Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.dockerignore'
+      - 'grub_kernel_updater/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.dockerignore'
+      - 'grub_kernel_updater/**'
+
+jobs:
+  test-docker-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: false
+        load: true
+        tags: grub-kernel-updater:test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    
+    - name: Test Docker image
+      run: |
+        # Create a test GRUB configuration file
+        echo "default=5.10.0-1234" > test-grub.conf
+        echo "kernel /boot/vmlinuz-5.10.0-1234" >> test-grub.conf
+        echo "kernel /boot/vmlinuz-5.11.0-5678" >> test-grub.conf
+        
+        # Run the image in list-only mode
+        docker run --rm -v $(pwd)/test-grub.conf:/mnt/grub/grub.conf:ro grub-kernel-updater:test --config /mnt/grub/grub.conf --list-only
+        
+        # Check that the output contains the expected kernel versions
+        output=$(docker run --rm -v $(pwd)/test-grub.conf:/mnt/grub/grub.conf:ro grub-kernel-updater:test --config /mnt/grub/grub.conf --list-only)
+        if [[ "$output" != *"5.10.0-1234"* ]]; then
+          echo "Expected kernel version 5.10.0-1234 not found in output"
+          exit 1
+        fi
+        if [[ "$output" != *"5.11.0-5678"* ]]; then
+          echo "Expected kernel version 5.11.0-5678 not found in output"
+          exit 1
+        fi
+        
+        echo "Docker tests passed successfully"
