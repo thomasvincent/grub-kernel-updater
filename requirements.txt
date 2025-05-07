@@ -1,0 +1,2 @@
+# No external dependencies required for core functionality
+# Development dependencies are managed in the pyproject.toml file
