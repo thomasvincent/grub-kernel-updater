@@ -9,7 +9,7 @@ Components:
     - cli: Command-line interface
 """
 
-__version__ = "0.2.0"
+__version__ = "1.0.0"
 __author__ = "Thomas Vincent"
 __email__ = "thomasvincent@gmx.com"
 __license__ = "MIT"

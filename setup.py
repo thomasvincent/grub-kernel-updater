@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="grub-kernel-updater",
-    version="0.2.0",
+    version="1.0.0",
     author="Thomas Vincent",
     author_email="thomasvincent@gmx.com",
     description="A utility for managing GRUB boot configuration",
@@ -27,7 +27,7 @@ setup(
         "Topic :: System :: Boot",
         "Topic :: System :: Systems Administration",
         "Intended Audience :: System Administrators",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
     ],
     packages=find_packages(),
     python_requires=">=3.9",
@@ -45,6 +45,9 @@ setup(
             "mypy>=1.0.0",
             "flake8>=6.0.0",
             "tox>=4.0.0",
+            "bandit>=1.7.5",
+            "safety>=2.3.0",
+            "pre-commit>=3.0.0",
         ],
     },
 )
